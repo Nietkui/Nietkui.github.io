@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>C++学习之旅01--类型、操作符</title>
+    <url>/2022/08/29/C-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8501-%E7%B1%BB%E5%9E%8B%E3%80%81%E6%93%8D%E4%BD%9C%E7%AC%A6/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这个文档作为总结复习使用，绝不是入门，有一些C语言和CPP的对比，所以<strong>阅读者默认有C语言基础</strong>。<br>学习视频：<a href="https://space.bilibili.com/702528832">B站郑莉老师</a>  </p>
+<h2 id="C-的特点"><a href="#C-的特点" class="headerlink" title="C++的特点"></a>C++的特点</h2><ol>
+<li><font color="#4B0082">兼容绝大部分C语言，即支持面向过程的方法</font></li>
+<li><font color="blue">面向对象的方法（OOP）</font></li>
+<li><font color="red">范型程序设计</font></li>
+</ol>
+<p>可能看到上面的三个名词有点懵逼，但其实都很好理解。<br><em>面向过程</em> 的编程其实就是函数式编程，C语言就是一个典型，它以函数为最小单位，不同函数的调用就构成了程序的运行。<br><em>面向对象</em> 则是把需要使用的对象放到类里，类定义了通用的属性和方法，比如“人”这个类，有“会使用工具”的属性，有“使用xx工具”的方法。说白了，属性就是特点，方法就是行为。<br>OOP还有封装、继承、多态等特点，这里先按下不表。<br><em>范型程序设计</em> 是指适用于不同类型的设计方法，比如一个排序算法，不仅适用于整数型，连结构体也适用。  </p>
+<h2 id="简单的cpp程序"><a href="#简单的cpp程序" class="headerlink" title="简单的cpp程序"></a>简单的cpp程序</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello Wolrd&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="comment">// cout为输出，endl相当于换行符</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以来对比一下C语言的hello world。  </p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello World\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用的头文件和函数都不一样了，我们的CPP使用I&#x2F;O数据流进行操作，C语言中则被称之为格式化输入输出，实现方法到底有什么不同呢？<br>我们暂时按下不表，因为其中原理有点复杂，我也还没搞懂。但可以看出，CPP的I&#x2F;O操作特点。</p>
+<h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>与C语言一样，分为整数类型、浮点数类型、字符类型和布尔类型，在程序中则分为常量和变量。</p>
+<h3 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h3><p>初始化方式</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">a</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line"><span class="type">int</span> a = &#123;<span class="number">0</span>&#125;; </span><br><span class="line"><span class="comment">//大括号括起来被成为列表初始化，不允许数据丢失，如浮点型转为整数型</span></span><br><span class="line"><span class="type">int</span> a&#123;<span class="number">0</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>*注：CPP中有<font color="red">string类</font>，可以定义字符串  </p>
+<h3 id="常量定义"><a href="#常量定义" class="headerlink" title="常量定义"></a>常量定义</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">float</span> PI = <span class="number">3.1415926</span>; <span class="comment">//常规</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> size = <span class="built_in">get_size</span>(); <span class="comment">//可以赋值为常量表达式</span></span><br></pre></td></tr></table></figure>
+<h3 id="auto和decltype类型"><a href="#auto和decltype类型" class="headerlink" title="auto和decltype类型"></a>auto和decltype类型</h3><p>auto是通过编译器自动判断类型： </p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> i,j;</span><br><span class="line"><span class="keyword">auto</span> k = i + j; <span class="comment">//这里判断k为int类型</span></span><br></pre></td></tr></table></figure>
+<p>如果 j 是double类型呢？k结果将会是double类型，和C语言一样，自动类型转化会向高精度滑落。  </p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> i;</span><br><span class="line"><span class="keyword">decltype</span>(i) k; <span class="comment">//k将会是int类型</span></span><br></pre></td></tr></table></figure>
+<p>这个类型很迷啊，我个人感觉，因为在C语言，可以用typeof()实现： </p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> i;</span><br><span class="line">typeof(i) k;</span><br></pre></td></tr></table></figure>
+
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>C语言中重复的部分就不写了，大家回去看书吧，有几个新启发：</p>
+<ol>
+<li>逗号运算符用处在于，有些地方（for语句）只能写一个表达式</li>
+<li>位运算的真正用途： <blockquote>
+<p>&amp; 运算用于使特定位为0，以及取最小的1位<br>| 运算用于使特定位为1<br>^ 运算用于使特定位颠倒</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">(<span class="type">int</span>)c;</span><br><span class="line"><span class="built_in">int</span>(c);</span><br><span class="line"><span class="keyword">static_cast</span> &lt;<span class="type">int</span>&gt; c;</span><br></pre></td></tr></table></figure>
+
+<h2 id="I-x2F-O流操作"><a href="#I-x2F-O流操作" class="headerlink" title="I&#x2F;O流操作"></a>I&#x2F;O流操作</h2><p><img src="/C-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8501-%E7%B1%BB%E5%9E%8B%E3%80%81%E6%93%8D%E4%BD%9C%E7%AC%A6/IO%E6%B5%81.png" alt="img"><br>嘛，这玩意，用到的时候再搜索吧。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>感觉很多地方还是啰嗦了，下次再精炼一点，如果内容比较少，就把一些课合并下来。</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>计算机语言学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux的自动化编译01</title>
+    <url>/2022/08/28/Linux%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E8%AF%91/</url>
+    <content><![CDATA[<p>观前提醒：这篇文章准确来说是写给我自己复习的，不喜勿喷，知乎和其他博客上有写的更好的文章，大家要多多参考啊  </p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>又是废话的前言，契机是某天某个群里突然有人出了一道C语言的题，说是有偿，我就开始解题了。<br>还没解完，那人就被群主飞机票了，原先的题也被撤回，我痛失五块钱。<br>下面关于make等等的知识就是在这样的背景下学习到的。  </p>
+<h2 id="Linux编译三兄弟"><a href="#Linux编译三兄弟" class="headerlink" title="Linux编译三兄弟"></a>Linux编译三兄弟</h2><p>Linux下编译有很多办法，但其中最常用的方法大抵是这几位：Makefile、CMake和sh。<br>其中Makefile和sh都是手动编写所需的编译步骤，然后分别通过make和sh命令进行执行，本质上和Windows下的bat和ps1差不多，都是shell编程，也就是和在终端里敲的命令写到了一个文件里执行。<br>而CMake是一款开源工具，用于自动化编写makefile并执行编译工具。  </p>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><p>这里科普一下C&amp;&amp;C++是如何被编译成可执行文件的：  </p>
+<figure class="highlight ps"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cpp</span> hello.c    <span class="comment">#预处理，把include所提及的文件合并进来，生成hello.i</span></span><br><span class="line">gcc <span class="literal">-S</span> hello.i     <span class="comment">#编译为汇编文件，生成hello.s</span></span><br><span class="line">as <span class="literal">-o</span> hello.o hello.s  <span class="comment">#汇编转二进制指令集，生成hello.o</span></span><br><span class="line">ld <span class="literal">-o</span> hello.exe hello.o ...libraries... <span class="comment">#链接库，生成可执行exe</span></span><br></pre></td></tr></table></figure>
+<p>理解这个有什么用呢？其实没什么用，实际情况用gcc就可以一步到位了（似乎是新版本gcc的功劳，之前可不是这样的），只是我刚好学到这个知识而已。  </p>
+<h2 id="Makeflie文件"><a href="#Makeflie文件" class="headerlink" title="Makeflie文件"></a>Makeflie文件</h2><p>目的：自动化编译文件，告诉计算机先编译哪些，再编译哪些文件。</p>
+<h3 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h3><figure class="highlight ps"><table><tr><td class="code"><pre><span class="line">目标文件(即你想生成的文件) : 依赖文件(目标文件的原材料)</span><br><span class="line">        命令(shell命令) <span class="comment">#注意命令必须tab开头</span></span><br><span class="line"><span class="comment">#例子</span></span><br><span class="line">main : main.c mytest.c hello.c</span><br><span class="line">    gcc main.c mytest.c hello.c <span class="literal">-o</span> main</span><br></pre></td></tr></table></figure>
+<p>看到这里，或许你会有疑问，这样利用makefile文件不是效率更低吗？还不如我自己在终端哼哧哼哧敲的代码少。<br>非也非也，事实上，在多文件的项目里，这样是更好维护的，原因有三：  </p>
+<ol>
+<li>在一个文件更好理清不同文件的关系，如果是命令行，一条条命令执行下来很容易出错</li>
+<li>makefile中有替代语法，使用替代语法后就会变简洁(抽象)很多</li>
+<li>make过程中，会检索更新的文件，并重新编译更新的文件，而非所有文件重新来一遍，这样提高了效率</li>
+</ol>
+<h3 id="工作过程"><a href="#工作过程" class="headerlink" title="工作过程"></a>工作过程</h3><p>makefile的工作顺序简单来说是缺啥找啥，如果第一条命令的依赖在工作目录（也就是makefile所在的文件夹）找不到，它就向下寻找依赖。  </p>
+<figure class="highlight ps"><table><tr><td class="code"><pre><span class="line">main : mian.o test.o</span><br><span class="line">    gcc main.o test.o <span class="literal">-o</span> main</span><br><span class="line"></span><br><span class="line">formian : mian.c test.c</span><br><span class="line">    gcc mian.c test.c <span class="literal">-o</span> main.o test.o</span><br></pre></td></tr></table></figure>
+<p>就比如上面这个，在执行第一条命令的时候，找不到mian.o和test.o，那就向下找，在formain找到了就向上执行。<br>最终产物是mian文件。<br>对于更新也是这样，如果有文件更新了，那就重新执行那个文件所在的命令，而后生成最终产物。  </p>
+<h3 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h3><p>学习语言大抵都要先学一些基础的语法的。<br>在makefile里最常见的语法就是各种变量的使用，这些变量大体分为两种：普通变量、自动变量。<br>普通变量和C语言里的宏简直一模一样，就是直接替换，不过大大地降低了重复的成本，它的基本用法如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CC = gcc <span class="comment">#变量赋值，不过一般用:=</span></span><br><span class="line"><span class="variable">$&#123;CC&#125;</span> <span class="comment">#使用变量</span></span><br></pre></td></tr></table></figure>
+<p>自动变量则是一些makefile里自己的默认的规则，如下：</p>
+<ol>
+<li>$@ : 规则中的目标集合</li>
+<li>$&lt; ：依赖文件集合中的第一个文件。</li>
+<li>$^ ：所有依赖文件的集合，使用空格分开，如果在依赖文件中有多个重复的文件，会去除重复的依赖文件，只保留一份。</li>
+<li>$% ：当目标是函数库的时候表示规则中的目标成员名，如果目标不是函数库文件，那么其值为空。</li>
+<li>$? ：所有比目标新的依赖目标集合，以空格分开。</li>
+<li>$+ ：所有依赖文件的集合，但是当依赖文件存在重复的话不去除重复的依赖文件。</li>
+</ol>
+<p>光说概念太抽象了，来点例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CC := gcc</span><br><span class="line">TARGET = main</span><br><span class="line">OBJ = main.o test.o</span><br><span class="line"></span><br><span class="line"><span class="variable">$&#123;TARGET&#125;</span> : <span class="variable">$&#123;OBJ&#125;</span></span><br><span class="line">    <span class="variable">$&#123;CC&#125;</span> -o <span class="variable">$@</span> $^</span><br><span class="line"></span><br><span class="line">%.o : %.c</span><br><span class="line">    <span class="variable">$&#123;CC&#125;</span> -o -c <span class="variable">$@</span> $&lt;</span><br></pre></td></tr></table></figure>
+<p>可能这样一依旧有点没看懂，比如%.o和%.c代表什么意思，其实%和Linux中的*是一样的，起着通配符的作用。<br>也就是说，%.o表示所有以.o为后缀的文件。接下来我们来介绍最后一点内容，关于“&#x3D;”：</p>
+<ol>
+<li>（ :&#x3D; ）：表示左值只取第一次的值，后面赋的值都无效</li>
+<li>（ ?&#x3D; ）：没有值的时候取右值，有值的时候用原来的</li>
+<li>（ +&#x3D; ）: 在这个值后面加点东西</li>
+</ol>
+<p>至此，咱们已经浅浅地过了一遍makefile的使用方法了，函数这些部分我感觉暂时用不到，就没有继续学下去了，感兴趣的朋友可以找点资料来看。  </p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>对于编译三兄弟，我只介绍了makefile的基础使用方法，等我有空了就更新CMake和sh。 </p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>make</tag>
+        <tag>shell</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+</search>
